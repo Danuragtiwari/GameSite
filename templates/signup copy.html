@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block homebutton %}
+<a class="navbar-brand page-scroll" href="/">GameSite</a>
+{% endblock homebutton %}
+
+{% block content %}
+	<div class="container" style="padding-top: 100px;">
+		<div class="col-xs-12 col-sm-8 col-sm-offset-2">
+			<h2 style="text-align: center;">Login</h2>
+			<form method="post">
+				{% csrf_token %}
+				{{ form.as_p }}
+				<button type="submit">Login</button>
+			</form>
+		</div>
+	</div>
+{% endblock %}
