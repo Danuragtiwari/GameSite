@@ -1,7 +1,8 @@
 # from django.contrib import admin
 from django.urls import path,include
-from .views import *
+# from .views import *
 from .views import sudoku, rank, changeRankType, saveQuestion, loginUser
+app_name="home"
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('sudoku/', sudoku),
