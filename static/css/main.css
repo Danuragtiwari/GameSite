@@ -1,0 +1,212 @@
+body {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+table {
+    border-spacing: 0px;
+    /* border: 2px #000 solid; */
+}
+
+.container {
+    margin-top: 60px;
+}
+
+#sudoku {
+    /*margin-top: 150px;*/
+}
+
+.center-frame {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    margin-top: -40px;
+    margin-left: -120px;
+    /*height: 80px;*/
+    width: 240px;
+    border: 3px #000 solid;
+    border-radius: 5px;
+    background-color: #fff;
+    z-index: 50;
+}
+
+.center-frame-bg {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    margin-top: -40px;
+    margin-left: -180px;
+    padding: 10px;
+    width: 360px;
+    border: 2px #000 solid;
+    border-radius: 5px;
+    background-color: #fff;
+    z-index: 51;
+}
+
+#start input {
+    margin: 15px auto;
+    text-align: left;
+    text-indent: 5px;
+    width: 160px;
+    font-size: 20px;
+    border-radius: 5px;
+    border: 2px #000 solid;
+    outline: none;
+}
+
+.btn-style {
+    margin: 10px 0px;
+    padding: 0;
+    font-size: 16px;
+    /*line-height: 75px;*/
+    border: none;
+    outline: none;
+    cursor: pointer;
+    /*box-shadow: defualt;*/
+}
+
+.btn-style:hover {
+    color: #22cc88;
+}
+
+#question-table tr td {
+    border: 2px #000 solid;
+    margin: 0;
+    padding: 0;
+}
+
+#question-table td input {
+    height: 48px;
+    width: 48px;
+    margin: 0;
+    padding: 0;
+    font-size: 32px;
+    color: #3498DB;
+    border: none;
+    line-height: 32px;
+    text-align: center;
+    outline: none;
+    cursor: pointer;
+}
+
+.a1,
+.a3,
+.a5,
+.a7,
+.a9 {
+    background-color: #e0efff;
+}
+
+#timer,
+#seeRank {
+    display: inline-block;
+    padding: 10px;
+    float: left;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#restart,
+#changeUser {
+    display: inline-block;
+    padding: 10px;
+    float: right;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#restart:hover,
+#changeUser:hover,
+#seeRank:hover {
+    color: #22cc88;
+}
+
+#game-rule table td {
+    border: none;
+}
+
+#game-rule tr td:nth-child(1) {
+    vertical-align: top;
+    width: 80px;
+}
+
+#game-rule tr td:nth-child(2) {
+    width: 260px;
+    text-align: left;
+}
+
+#game-rule-close {
+    position: absolute;
+    top: 0px;
+    right: 5px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+#game-rule-close:hover {
+    color: #22cc88;
+}
+
+
+/* rank.html */
+
+#game-score {
+    text-align: center;
+    /*margin: 0 auto;*/
+}
+
+#game-score div {
+    display: inline-block;
+    margin: 15px;
+    text-align: left;
+    font-size: 20px;
+}
+
+#rank-type>div {
+    display: inline-block;
+    cursor: pointer;
+}
+
+#rank-type>div:hover {
+    color: #22cc88;
+}
+
+#rank-table {
+    font-size: 20px;
+}
+
+#rank-table tr {
+    height: 36px;
+}
+
+#rank-table td {
+    width: 120px;
+    border: none;
+}
+
+.hit-row td {
+    color: red;
+    font-weight: bold;
+}
+
+#new-game {
+    margin: 20px;
+    padding: 10px;
+}
+
+#new-game a {
+    font-size: 20px;
+    text-decoration: none;
+}
+
+#new-game a:visited {
+    color: #000;
+}
+
+#new-game a:hover {
+    color: #22cc88;
+}
