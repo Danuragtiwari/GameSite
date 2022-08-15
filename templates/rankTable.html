@@ -1,0 +1,23 @@
+<tr>
+    <th>排名</th>
+    <th>玩家名稱</th>
+    <th>解題時間</th>
+    <th>解題數</th>
+</tr>
+{% for item in top10User %}
+    {% if userName == item.username %}
+        <tr class="hit-row">
+            <td>{{ forloop.counter }}</td>
+            <td>{{ item.username }}</td>
+            <td>{{ item.bestTime }}</td>
+            <td>{{ item.solvedQuestion }}</td>
+        </tr>
+    {% else %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ item.username }}</td>
+            <td>{{ item.bestTime }}</td>
+            <td>{{ item.solvedQuestion }}</td>
+        </tr>
+    {% endif %}
+{% endfor %}

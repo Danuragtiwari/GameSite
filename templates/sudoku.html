@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="UTF-8">
+	<title>Sudoku</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <script src="https://kit.fontawesome.com/76e472a2b2.js" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+
+<script>
+
+var question = "{{ question }}";
+var solution = "{{ solution }}";
+var countDown = 0;
+var userName = "{{ userName }}";
+
+function init() {
+
+    var x = 0;
+    $("td input").each( function(){
+        var obj = this;
+        if(question[x] != '0') {
+            obj.value = question[x];
+            $(obj).attr("disabled", true);
+            $(obj).attr("style", "color: #000;");
+        }
+        x++;
+    });
+
+}
+
+function isValid(obj){
+
+    var input = obj.value;
+    var name = obj.name;
+    var row = name[0];
+    var col = name[1];
+    var area = name.substring(2, 4);
+    var isValid = true;
+
+    $(".r" + row).each( function(){
+        if(this.name != name){
+           if(this.value == input){
+               isValid = false;
+           }
+        }
+    });
+
+    $(".c" + col).each( function(){
+        if(this.name != name) {
+            if (this.value == input) {
+                isValid = false;
+            }
+        }
+    });
+
+    $("." + area).each( function(){
+        if(this.name != name){
+            if(this.value == input){
+                isValid = false;
+            }
+        }
+    });
+
+    return isValid;
+}
+
+function isComplete() {
+    var cnt = 0;
+    var complete = true;
+    $("td input").each( function(){
+        if(solution[cnt] != this.value){
+            complete = false;
+        }
+        cnt++;
+    });
+
+    return complete;
+}
+
+function loginUser() {
+    userName = $("input[name='userName']").val();
+    $.ajax({
+        url: "/sudoku/loginUser",
+        data: {
+            "userName": userName
+        },
+        success: function() {
+            console.log("login success")
+        }
+    });
+}
+
+$(document).ready( function(){
+
+    // 初始化數獨體目
+	init();
+
+	$("input").keyup( function(event){
+
+        if (this.name == "userName") {
+            return ;
+        }
+
+        var obj = this;
+
+        // 按下刪除鍵取消紅字標記
+        if(event.keyCode == 46){
+            $(obj).attr("style", "color: #3498DB;");
+            return ;
+        }
+
+        // 判斷輸入數字是否符合數獨規則，若不符合使數字顯示紅色
+        var valid = isValid(this);
+        if(!valid){
+			$(obj).attr("style", "color: #E74C3C;");
+		} else {
+            $(obj).attr("style", "color: #3498DB;");
+        }
+        if(isComplete()){
+            $("#complete").show();
+        }
+	});
+
+    $("#start button").click( function(){
+        $("#start").hide('fast');
+
+        setInterval( function(){
+            countDown++;
+            if(countDown > 60){
+                let min = parseInt(countDown / 60);
+                let sec = countDown % 60;
+                $("#countDown").text(min + ":" + sec);
+            } else {
+                $("#countDown").text(countDown);
+            }
+            if(complete){
+                clearTimeout();
+            }
+        }, 1000);
+    });
+
+    $(".checkToRank").click( function(){
+       var score = countDown;
+        window.location.href='/sudoku/rank?userName=' + userName + '&score=' + score;
+    });
+
+    $("#seeRank").click( function(){
+        window.location.href='/sudoku/rank?userName=' + userName + '&score=0';
+    })
+
+});
+
+</script>
+
+<div class="container">
+    <h1>數獨</h1>
+    <div id="sudoku">
+
+        <div id="game-rule" class="center-frame-bg" style="display: none;">
+            <h3>數獨</h3>
+            <p style="text-align: left; padding: 10px"><b>數獨</b>是一種數學邏輯遊戲，遊戲由9×9個格子組成，玩家需要根據格子提供的數字推理出其他格子的數字。</p>
+            <table>
+                <tr>
+                    <td><b>規則一：</b></td>
+                    <td>每一列的數字均須包含 1～9，不能缺少，也不能重複。</td>
+                </tr>
+                <tr>
+                    <td><b>規則二：</b></td>
+                    <td>每一行的數字均須包含 1～9，不能缺少，也不能重複。</td>
+                </tr>
+                <tr>
+                    <td><b>規則三：</b></td>
+                    <td>每一宮(粗黑線圍起來的區域，通常是 3*3 的九宮格)的數字均須包含 1～9，不能缺少，也不能重複。</td>
+                </tr>
+            </table>
+            <div id="game-rule-close" onclick="$('#game-rule').hide();"><span>&times;</span></div>
+        </div>
+
+        <div id="complete" class="center-frame" style="display: none;">
+            <div style="margin: 10px 0; font-size: 20px;">恭喜完成！</div>
+            <div><button class="checkToRank btn-style">確定</button></div>
+        </div>
+
+        <div id="start" class="center-frame" {% if userName != "" %}style="display: none;"{% endif %}>
+            <input type="text" name="userName" placeholder="輸入玩家名稱">
+            <div><button class="btn-style" onclick="loginUser();">開始遊戲</button></div>
+        </div>
+
+        <div style="display: block;">
+            <div id="seeRank">
+                <div>查看排名</div>
+            </div>
+            <div id="changeUser" onclick="$('#start').show();">更換玩家</div>
+        </div>
+
+        <table id="question-table">
+            {% for x in loop %}
+                <tr>
+                    {% for y in loop %}
+                        {% if x <= 2 and y <= 2 %}
+                            <td><input id="{{ x }}{{ y }}a1" type="text" class="a1 r{{ x }} c{{ y }}" name="{{ x }}{{ y }}a1" value="" maxlength=1></td>
+                        {% elif x <= 2 and y > 2 and y <= 5 %}
+                            <td><input id="{{ x }}{{ y }}a2" type="text" class="a2 r{{ x }} c{{ y }}" name="{{ x }}{{ y }}a2" value="" maxlength=1></td>
+                        {% elif x <= 2 and y > 5 %}
+                            <td><input id="{{ x }}{{ y }}a3" type="text" class="a3 r{{ x }} c{{ y }}" name="{{ x }}{{ y }}a3" value="" maxlength=1></td>
+                        {% elif x > 2 and x <= 5 and y <= 2 %}
+                            <td><input id="{{ x }}{{ y }}a4" type="text" class="a4 r{{ x }} c{{ y }}" name="{{ x }}{{ y }}a4" value="" maxlength=1></td>
+                        {% elif x > 2 and x <= 5 and y > 2 and y <= 5 %}
+                            <td><input id="{{ x }}{{ y }}a5" type="text" class="a5 r{{ x }} c{{ y }}" name="{{ x }}{{ y }}a5" value="" maxlength=1></td>
+                        {% elif x > 2 and x <= 5 and y > 5 %}
+                            <td><input id="{{ x }}{{ y }}a6" type="text" class="a6 r{{ x }} c{{ y }}" name="{{ x }}{{ y }}a6" value="" maxlength=1></td>
+                        {% elif x > 5 and y <= 2 %}
+                            <td><input id="{{ x }}{{ y }}a7" type="text" class="a7 r{{ x }} c{{ y }}" name="{{ x }}{{ y }}a7" value="" maxlength=1></td>
+                        {% elif x > 5 and y > 2 and y <= 5 %}
+                            <td><input id="{{ x }}{{ y }}a8" type="text" class="a8 r{{ x }} c{{ y }}" name="{{ x }}{{ y }}a8" value="" maxlength=1></td>
+                        {% elif x > 5 and y > 5 %}
+                            <td><input id="{{ x }}{{ y }}a9" type="text" class="a9 r{{ x }} c{{ y }}" name="{{ x }}{{ y }}a9" value="" maxlength=1></td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+        
+        <div style="display: block;">
+            <div id="timer">
+                時間： <span id="countDown" style="width: 60px">0</span>
+            </div>
+            <div id="restart" onclick="$('#game-rule').show();">遊戲規則</div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

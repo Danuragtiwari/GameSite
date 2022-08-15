@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sudoku</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <script src="https://kit.fontawesome.com/76e472a2b2.js" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+
+<script>
+
+$(document).ready( function(){
+
+    var test = "{{ user.username }}";
+    console.log(test)
+
+    $("#choice-speed").click( function(){
+
+        $.ajax({
+            url:"/changeRankType",
+            type: "GET",
+            data: {
+                "sortType": "speed",
+            },
+            success: function (data) {
+                $("#rank-table").html(data);
+            },
+            error: function () {
+                alert("speed ajax error");
+            }
+        });
+
+    });
+
+    $("#choice-number").click( function(){
+
+        $.ajax({
+            url:"/changeRankType",
+            type: "GET",
+            data: {
+                "sortType": "number",
+            },
+            success: function (data) {
+                $("#rank-table").html(data);
+            },
+            error: function () {
+                alert("speed ajax error");
+            }
+        });
+
+    });
+
+});
+
+
+</script>
+
+<div class="container">
+   <h1>數獨</h1>
+    <div id="sudoku">
+        {% if score != 0 %}
+            <div id="game-score">
+                <div>玩家： {{ user.username }}</div><div>解題時間： {{ scoreStr }}</div>
+            </div>
+        {% endif %}
+        <div id="rank-type" style="margin: 10px; font-size: 20px;">
+            <div id="choice-speed">
+                <span><i class="fas fa-medal" style="color: #ffd800;"></i> 依解題速度排名</span>&ensp;
+            </div>
+            <div id="choice-number">
+                <span><i class="fas fa-medal" style="color: #4d80e4;"></i> 依解題數排名</span>
+            </div>
+        </div>
+        <table id="rank-table">
+            {% include "rankTable.html" %}
+        </table>
+        <div id="new-game"><a href="/sudoku">再來一局 <i class="fas fa-redo-alt"></i> </a></div>
+    </div>
+</div>
+
+</body>
+</html>
