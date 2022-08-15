@@ -5,6 +5,7 @@ from .views import sudoku, rank, changeRankType, saveQuestion, loginUser
 app_name="home"
 urlpatterns = [
     # path('admin/', admin.site.urls),
+    path('',sudoku)
     path('sudoku/', sudoku),
     path('sudoku/loginUser/', loginUser),
     path('sudoku/rank/', rank),

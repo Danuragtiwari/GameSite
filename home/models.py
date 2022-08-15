@@ -21,6 +21,6 @@ class User(models.Model):
     def __str__(self):
         return self.username
 
-admin.site.register(Sudoku)
-admin.site.register(User)
+# admin.site.register(Sudoku)
+# admin.site.register(User)
 
