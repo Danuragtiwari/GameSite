@@ -4,7 +4,7 @@ from builtins import range, locals, int, str
 from django.shortcuts import render, redirect, HttpResponse
 
 import numpy as np
-from main.models import Sudoku, User
+from .models import Sudoku, User
 
 
 # Create your views here.
@@ -101,8 +101,8 @@ def saveQuestion(request):
 
         return redirect("/sudoku/")
 
-    quizzes = np.load('main/sudoku_quizzes.npy')  # shape = (1000000, 9, 9)
-    solutions = np.load('main/sudoku_solutions.npy')  # shape = (1000000, 9, 9)
+    quizzes = np.load('home/sudoku_quizzes.npy')  # shape = (1000000, 9, 9)
+    solutions = np.load('home/sudoku_solutions.npy')  # shape = (1000000, 9, 9)
 
     for x in range(0, 100000, 1):
         tmp = ""
