@@ -1,10 +1,12 @@
 # from django.contrib import admin
 from django.urls import path,include
 from .views import *
+from .views import sudoku, rank, changeRankType, saveQuestion, loginUser
 urlpatterns = [
     # path('admin/', admin.site.urls),
-     path('', index,name='index'),
-    path('signup/',signup, name='signup'),
-   path('login/',login,name='login'),
-   path('logout/', logout,name='logout'),
+    path('sudoku/', sudoku),
+    path('sudoku/loginUser/', loginUser),
+    path('sudoku/rank/', rank),
+    path('changeRankType/', changeRankType),
+    path('sudoku/saveQuestion/', saveQuestion)
 ]
