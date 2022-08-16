@@ -9,6 +9,7 @@ from .models import Sudoku, User
 
 # Create your views here.
 def sudoku(request):
+    return render(request,'sudoku.html')
     try:
         userName = request.session['user']
         print(userName)
