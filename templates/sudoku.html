@@ -96,7 +96,7 @@ function loginUser() {
 
 $(document).ready( function(){
 
-    // 初始化數獨體目
+    // 
 	init();
 
 	$("input").keyup( function(event){
@@ -107,13 +107,13 @@ $(document).ready( function(){
 
         var obj = this;
 
-        // 按下刪除鍵取消紅字標記
+        // Press the delete key to cancel the red letter mark
         if(event.keyCode == 46){
             $(obj).attr("style", "color: #3498DB;");
             return ;
         }
 
-        // 判斷輸入數字是否符合數獨規則，若不符合使數字顯示紅色
+        // Determine whether the input number complies with the Sudoku rules, if not, make the number display red
         var valid = isValid(this);
         if(!valid){
 			$(obj).attr("style", "color: #E74C3C;");
@@ -162,39 +162,41 @@ $(document).ready( function(){
 
         <div id="game-rule" class="center-frame-bg" style="display: none;">
             <h3>Sudoku </h3>
-            <p style="text-align: left; padding: 10px"><b>數獨</b>is a mathematical logic game. The game consists of 9×9 grids. Players need to deduce the numbers of other grids according to the numbers provided by the grids.。</p>
+            <p style="text-align: left; padding: 10px"><b>Sudoku</b>is a mathematical logic game. The game consists of 9×9 grids. Players need to deduce the numbers of other grids according to the numbers provided by the grids.。</p>
             <table>
                 <tr>
-                    <td><b>規則一：</b></td>
-                    <td>每一列的數字均須包含 1～9，不能缺少，也不能重複。</td>
+                    <td><b>Rule one：</b></td>
+                    <td>The numbers in each column must contain 1 to 9, which cannot be missing or repeated.</td>
                 </tr>
                 <tr>
-                    <td><b>規則二：</b></td>
-                    <td>每一行的數字均須包含 1～9，不能缺少，也不能重複。</td>
+                    <td><b>Rule two：</b></td>
+                    <td>
+                        The numbers in each line must contain 1 to 9, which cannot be missing or repeated。</td>
                 </tr>
                 <tr>
-                    <td><b>規則三：</b></td>
-                    <td>每一宮(粗黑線圍起來的區域，通常是 3*3 的九宮格)的數字均須包含 1～9，不能缺少，也不能重複。</td>
+                    <td><b>Rule three：</b></td>
+                    <td>The numbers of each palace (the area enclosed by the thick black line, usually a 3*3 nine-square grid) must contain 1 to 9, which cannot be missing or repeated.。</td>
                 </tr>
             </table>
             <div id="game-rule-close" onclick="$('#game-rule').hide();"><span>&times;</span></div>
         </div>
 
         <div id="complete" class="center-frame" style="display: none;">
-            <div style="margin: 10px 0; font-size: 20px;">恭喜完成！</div>
-            <div><button class="checkToRank btn-style">確定</button></div>
+            <div style="margin: 10px 0; font-size: 20px;">Congrats on completion!</div>
+            <div><button class="checkToRank btn-style">Sure</button></div>
         </div>
 
         <div id="start" class="center-frame" {% if userName != "" %}style="display: none;"{% endif %}>
             <input type="text" name="userName" placeholder="輸入玩家名稱">
-            <div><button class="btn-style" onclick="loginUser();">開始遊戲</button></div>
+            <div><button class="btn-style" onclick="loginUser();">start the game</button></div>
         </div>
 
         <div style="display: block;">
             <div id="seeRank">
-                <div>查看排名</div>
+                <div>View ranking</div>
             </div>
-            <div id="changeUser" onclick="$('#start').show();">更換玩家</div>
+            <div id="changeUser" onclick="$('#start').show();">
+                change player</div>
         </div>
 
         <table id="question-table">
@@ -227,9 +229,9 @@ $(document).ready( function(){
         
         <div style="display: block;">
             <div id="timer">
-                時間： <span id="countDown" style="width: 60px">0</span>
+                time： <span id="countDown" style="width: 60px">0</span>
             </div>
-            <div id="restart" onclick="$('#game-rule').show();">遊戲規則</div>
+            <div id="restart" onclick="$('#game-rule').show();">game rules</div>
         </div>
     </div>
 </div>
